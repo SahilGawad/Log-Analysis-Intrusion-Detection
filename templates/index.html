@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Log Analyzer</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial;
+    }
+
+    body{
+      background:#0f172a;
+      color:white;
+      padding:30px;
+    }
+
+    .container{
+      max-width:900px;
+      margin:auto;
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:10px;
+      color:#38bdf8;
+      font-size:40px;
+    }
+
+    .subtitle{
+      text-align:center;
+      margin-bottom:30px;
+      color:#cbd5e1;
+    }
+
+    .box{
+      background:#1e293b;
+      padding:30px;
+      border-radius:12px;
+      margin-bottom:20px;
+      box-shadow:0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .upload-form{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+    }
+
+    input[type="file"]{
+      margin:20px 0;
+      color:white;
+    }
+
+    button{
+      padding:12px 22px;
+      border:none;
+      background:#38bdf8;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:bold;
+      transition:0.3s;
+    }
+
+    button:hover{
+      transform:scale(1.05);
+    }
+
+    .result-title{
+      margin-bottom:15px;
+      color:#38bdf8;
+    }
+
+    .alert{
+      background:#334155;
+      padding:15px;
+      border-left:5px solid red;
+      margin-top:15px;
+      border-radius:8px;
+    }
+
+    .safe{
+      border-left:5px solid lime;
+    }
+
+    .danger{
+      color:#ff4d4d;
+      font-weight:bold;
+      margin-bottom:8px;
+    }
+
+    .footer{
+      text-align:center;
+      margin-top:30px;
+      color:#94a3b8;
+      font-size:14px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Log Analysis</h1>
+
+    <p class="subtitle">
+      Intrusion Detection System
+    </p>
+
+    <div class="box">
+
+      <form method="POST" enctype="multipart/form-data" class="upload-form">
+
+        <input type="file" name="logfile" required>
+
+        <button type="submit">
+          Analyze Logs
+        </button>
+
+      </form>
+
+    </div>
+
+    <div class="box">
+
+      <h2 class="result-title">
+        Results
+      </h2>
+
+      {% if result %}
+
+        {% for item in result %}
+
+          <div class="alert">
+
+            <p class="danger">
+              ⚠ Suspicious Activity Detected
+            </p>
+
+            <p>
+              <strong>IP Address:</strong> {{ item.ip }}
+            </p>
+
+            <p>
+              <strong>Attempts:</strong> {{ item.count }}
+            </p>
+
+            <p>
+              <strong>Status:</strong> Possible Brute Force Attack
+            </p>
+
+          </div>
+
+        {% endfor %}
+
+      {% else %}
+
+        <div class="alert safe">
+
+          ✅ Upload a log file and click Analyze Logs.
+
+        </div>
+
+      {% endif %}
+
+    </div>
+
+    <div class="footer">
+
+      Cybersecurity Project using Flask & Python
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>
